@@ -6,16 +6,13 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var exphbs  = require('express-handlebars');
 
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var routes = require('./routes/index');
 var users = require('./routes/user');
 var passport = require('passport');
 var FitbitStrategy = require('passport-fitbit').Strategy;
 var keys = require('./keys');
-var app = express();
-
-/* FitBit API Keys */
-var FITBIT_CONSUMER_KEY = keys.fitbit_consumer_key;
-var FITBIT_CONSUMER_SECRET = keys.fitbit_consumer_key;
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -24,6 +21,9 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
+/* FitBit API Keys */
+var FITBIT_CONSUMER_KEY = keys.fitbit_consumer_key;
+var FITBIT_CONSUMER_SECRET = keys.fitbit_consumer_secret;
 
 passport.use(new FitbitStrategy({
     consumerKey: FITBIT_CONSUMER_KEY,
@@ -32,6 +32,10 @@ passport.use(new FitbitStrategy({
   },
   function(token, tokenSecret, profile, done) {
     // asynchronous verification, for effect...
+    // var user = {
+    //     name: 
+    // }
+    console.log(profile.displayName);
     process.nextTick(function () {
       
       // To keep the example simple, the user's Fitbit profile is returned to
@@ -39,9 +43,17 @@ passport.use(new FitbitStrategy({
       // to associate the Fitbit account with a user record in your database,
       // and return that user instead.
       return done(null, profile);
-    });
-  }
-));
+    })
+   })
+)
+
+var app = express();
+
+app.use(cookieParser());
+app.use(session({secret: 'chicken nuggets'}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 // view engine setup
 
@@ -69,11 +81,11 @@ app.use('/', routes);
 app.use('/users', users);
 
 /// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-});
+// app.use(function(req, res, next) {
+//     var err = new Error('Not Found');
+//     err.status = 404;
+//     next(err);
+// });
 
 /// error handlers
 
@@ -84,7 +96,7 @@ if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
         res.render('error', {
-            message: err.message,
+            message: ge,
             error: err,
             title: 'error'
         });
@@ -102,6 +114,11 @@ app.use(function(err, req, res, next) {
     });
 });
 
+
+app.get('/', function(req, res){
+    res.render('index', {user: req.user});
+    console.log(user);
+});
 // GET /auth/fitbit
 //   Use passport.authenticate() as route middleware to authenticate the
 //   request.  The first step in Fitbit authentication will involve redirecting
@@ -117,12 +134,18 @@ app.get('/auth/fitbit',
 app.get('/auth/fitbit/callback', 
   passport.authenticate('fitbit', { failureRedirect: '/login' }),
   function(req, res) {
-    res.redirect('/');
+    console.log(req._passport.session);
+    res.send(req._passport.session);
   });
 
-/* sets and listens to port 8080 */
-app.set('port', process.env.PORT || 8080);
+/* sets and listens to port 3000 */
+app.set('port', process.env.PORT || 3000);
 
 app.listen(app.get('port'));
+
+function ensureAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) { return next(); }
+    res.redirect('/');
+}
 
 module.exports = app;
