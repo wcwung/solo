@@ -1,0 +1,24 @@
+# Humeridian #
+
+
+## Summary ##
+  Humeridian is data visualizer that places your health at the forefront. We aggregate data from FitBit and Moves to give you an easy-to-read dashboard that monitors your daily living.
+
+## Problem ##
+  From health monitors, sleep tracking, and daily movement, all of our data is scattered across different platforms.
+## Solution ##
+Humeridian solves this problem by aggregating your daily health onto one clean dashboard.
+
+<!-- ## Quote from You ##
+  > A quote from a spokesperson in your company.
+	
+## How to Get Started ##
+  > Describe how easy it is to get started.
+
+## Customer Quote ##
+  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+
+## Closing and Call to Action ##
+  > Wrap it up and give pointers where the reader should go next.
+
+ -->
