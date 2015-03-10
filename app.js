@@ -33,9 +33,6 @@ passport.use(new FitbitStrategy({
   },
   function(token, tokenSecret, profile, done) {
     // asynchronous verification, for effect...
-    // var user = {
-    //     name: 
-    // }
     console.log(profile.displayName);
     process.nextTick(function () {
       
@@ -76,7 +73,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
