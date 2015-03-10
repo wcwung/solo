@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var exphbs  = require('express-handlebars');
 
+var cors = require('cors');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var routes = require('./routes/index');
@@ -53,6 +54,7 @@ app.use(cookieParser());
 app.use(session({secret: 'chicken nuggets'}));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cors());
 
 
 // view engine setup
@@ -134,10 +136,14 @@ app.get('/auth/fitbit',
 app.get('/auth/fitbit/callback', 
   passport.authenticate('fitbit', { failureRedirect: '/login' }),
   function(req, res) {
-    console.log(req._passport.session);
-    res.send(req._passport.session);
+    // console.log(req._passport.session);
+
+    res.redirect('/');
   });
 
+app.get('/userdata', function(req, res){
+    res.send(req._passport.session);
+});
 /* sets and listens to port 3000 */
 app.set('port', process.env.PORT || 3000);
 
