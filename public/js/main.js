@@ -18,8 +18,10 @@ $(function() {
 					console.log("Fetched Fitbit Data");
 					$steps = $('#steps-count');
 					$distance = $('#distance');
+					$floors = $('#floors');
 					var steps = data.user["_json"].best.total.steps.value;
 					var distance =  data.user["_json"].best.total.distance.value; 
+					var floors = data.user["_json"].best.total.floors.value; 
 
 					var steps = steps.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
@@ -27,6 +29,7 @@ $(function() {
 
 					$('<h1>' + distance.toFixed(1) + ' miles' + '</h1>').appendTo($distance);
 
+					$('<h1>' + floors.toFixed(1) + ' floors' + '</h1>').appendTo($floors);
 					console.log(steps);
 					console.log(data.user["_json"]);
 					console.log(data);
