@@ -16,10 +16,19 @@ $(function() {
 				contentType: 'application/json',
 				success: function(data) {
 					console.log("Fetched Fitbit Data");
-					var name = data.user.displayName;
-					var user = data.user["_json"].user;
-					console.log("Name: ", name);
-					console.log(user.dateOfBirth);
+					$steps = $('#steps');
+					$distance = $('#distance');
+					var steps = data.user["_json"].best.total.steps.value;
+					var distance =  data.user["_json"].best.total.distance.value; 
+					
+					var steps = steps.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+					$('<h1>' + steps + ' steps today' + '</h1>').appendTo($steps);
+
+					$('<h1>' + distance.toFixed(1) + ' miles' + '</h1>').appendTo($distance);
+
+					console.log(steps);
+					console.log(data.user["_json"]);
 				},
 				error: function(data) {
 					console.error('Failed to get data');

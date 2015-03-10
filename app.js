@@ -11,8 +11,10 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var routes = require('./routes/index');
 var users = require('./routes/user');
+var dashboard = require('./routes/dashboard');
 var passport = require('passport');
 var FitbitStrategy = require('passport-fitbit').Strategy;
+var MovesStrategy = require('passport-moves').Strategy;
 var keys = require('./keys');
 
 passport.serializeUser(function(user, done) {
@@ -77,6 +79,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/dashboard', dashboard);
 
 /// catch 404 and forward to error handler
 // app.use(function(req, res, next) {
@@ -113,9 +116,9 @@ app.use(function(err, req, res, next) {
 });
 
 
-app.get('/', function(req, res){
+app.get('/dashboard', function(req, res){
     res.render('index', {user: req.user});
-    console.log(user);
+    // console.log(user);
 });
 // GET /auth/fitbit
 //   Use passport.authenticate() as route middleware to authenticate the
@@ -134,7 +137,7 @@ app.get('/auth/fitbit/callback',
   function(req, res) {
     // console.log(req._passport.session);
 
-    res.redirect('/');
+    res.redirect('/dashboard');
   });
 
 app.get('/userdata', function(req, res){

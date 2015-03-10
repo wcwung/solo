@@ -4,7 +4,7 @@ var router = express.Router();
 /* GET home page. */
 
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Humeridian – Visualize Your Health' });
+  res.render('login', { title: 'Humeridian – Visualize Your Health' });
 });
 
 module.exports = router;
