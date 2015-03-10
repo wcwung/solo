@@ -15,6 +15,7 @@ var dashboard = require('./routes/dashboard');
 var passport = require('passport');
 var FitbitStrategy = require('passport-fitbit').Strategy;
 var MovesStrategy = require('passport-moves').Strategy;
+var FitbitApiClient = require('fitbit-node');
 var keys = require('./keys');
 
 passport.serializeUser(function(user, done) {
@@ -27,6 +28,10 @@ passport.deserializeUser(function(obj, done) {
 /* FitBit API Keys */
 var FITBIT_CONSUMER_KEY = keys.fitbit_consumer_key;
 var FITBIT_CONSUMER_SECRET = keys.fitbit_consumer_secret;
+
+/* Moves API Keys */
+var MOVES_CONSUMER_KEY = keys.moves_client_id;
+var MOVES_CONSUMER_SECRET = keys.moves_secret_id;
 
 passport.use(new FitbitStrategy({
     consumerKey: FITBIT_CONSUMER_KEY,
@@ -46,6 +51,11 @@ passport.use(new FitbitStrategy({
     })
    })
 )
+
+// passport.use(new MovesStrategy({
+//     clientID: MOVES_CONSUMER_KEY,
+//     clientSecret: MOVES_CONSUMER_SECRET
+// }))
 
 var app = express();
 
@@ -143,6 +153,7 @@ app.get('/auth/fitbit/callback',
 app.get('/userdata', function(req, res){
     res.send(req._passport.session);
 });
+
 /* sets and listens to port 3000 */
 app.set('port', process.env.PORT || 3000);
 

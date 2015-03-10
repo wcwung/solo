@@ -1,9 +1,61 @@
+<div class="head">
 	<div class="container">
-	  <h1>Dashboard</h1>
-  	<a href="/auth/fitbit">Login with Fitbit</a>
-  	<div id="steps">
-  	</div>
-  	<div id="distance">
-  		
-  	</div>
+		<h1 class="dash-head">Dashboard</h1>
+		<a href="/" class="logout">Log Out</a>
+	</div>
+</div>	
+<section class="body-stats">
+	<div class="container">
+		<div class="row body-stats-wrapper">
+			<div class="col-md-6 date-info">
+				<div id="date-today"></div>
+				<div id="now"></div>{{!-- 
+				<div id="locale">San Francisco, California</div> --}}
+				<ul id="achievements">
+					<li><img src="/img/badge_1.png" alt=""></li>
+					<li><img src="/img/badge_2.png" alt=""></li>
+					<li><img src="/img/badge_3.png" alt=""></li>
+				</ul>
+			</div>
+			<div class="col-md-6 stats-wrapper">
+				<div class="row">
+					<ul class="body-stats-col">
+						<li class="col-md-4">
+							<div class="stats-head">Weight</div>
+							<div class="stats-value weight"></div>
+						</li>
+						<li class="col-md-4">
+							<div class="stats-head">Height</div>
+							<div class="stats-value height"></div>
+						</li>
+						<li class="col-md-4">
+							<div class="stats-head">Blood Type</div>
+							<div class="stats-value blood"></div>
+						</li>
+					</ul>
+				</div>
+				<div class="row">
+					<ul class="body-stats-col">
+						<li class="col-md-4">
+							<div class="stats-head">Age</div>
+							<div class="stats-value age"></div>
+						</li>
+						<li class="col-md-4">
+							<div class="stats-head">Heart Rate</div>
+							<div class="stats-value heart"></div>
+						</li>
+						<li class="col-md-4">
+							<div class="stats-head">Body Fat</div>
+							<div class="stats-value fat"></div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="activities">
+	<div class="container activities-container">
+		{{> fitbit-activities }}
   </div>
+</section>
